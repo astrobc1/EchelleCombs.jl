@@ -65,9 +65,9 @@ end
 
 function estimate_background(spec, min_mode_spacing; smooth_width=nothing)
     if isnothing(smooth_width)
-        smooth_width = nextodd(Int(round(2.5 * min_mode_spacing)))
+        smooth_width = Maths.nextodd(Int(round(2.5 * min_mode_spacing)))
     else
-        smooth_width =nextodd(smooth_width)
+        smooth_width = Maths.nextodd(smooth_width)
     end
     spec_smooth = Maths.quantile_filter1d(spec, width=3)
     background = Maths.quantile_filter1d(spec_smooth, width=smooth_width, p=0)
@@ -77,9 +77,9 @@ end
 
 function estimate_continuum(spec, min_mode_spacing; smooth_width=nothing)
     if isnothing(smooth_width)
-        smooth_width = nextodd(Int(round(2.5 * min_mode_spacing)))
+        smooth_width = Maths.nextodd(Int(round(2.5 * min_mode_spacing)))
     else
-        smooth_width =nextodd(smooth_width)
+        smooth_width = Maths.nextodd(smooth_width)
     end
     spec_smooth = Maths.quantile_filter1d(spec, width=3)
     continuum = Maths.quantile_filter1d(spec_smooth, width=smooth_width, p=0.99)

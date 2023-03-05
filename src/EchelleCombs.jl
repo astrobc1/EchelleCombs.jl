@@ -1,6 +1,8 @@
 module EchelleCombs
 
-const SPEED_OF_LIGHT_MPS = 299792458.0
+using NaNStatistics
+using EchelleUtils
+using Polynomials
 
 function resolve_xrange(x, xrange=nothing)
     good = findall(isfinite.(x))
@@ -23,16 +25,13 @@ end
 include("mode_fitting.jl")
 
 
-include("peak_finding.jl")
+include("mode_finding.jl")
 
 
 include("lfc.jl")
 
 
 include("drifts.jl")
-
-
-include("utils.jl")
 
 
 end

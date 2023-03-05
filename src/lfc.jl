@@ -1,5 +1,3 @@
-using Polynomials
-
 export get_lfc_modes
 
 function get_lfc_mode_pixel_spacing(xi, xf, λi, λf, ν0, Δν)

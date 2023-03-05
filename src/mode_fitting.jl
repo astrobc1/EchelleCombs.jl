@@ -1,6 +1,5 @@
 using FastClosures
 using LsqFit
-using EchelleUtils
 
 function refine_modes_centroid(spec, modes, spacing; n_iterations=3)
     modes_out = copy(modes)

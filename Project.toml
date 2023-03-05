@@ -2,3 +2,10 @@ name = "EchelleCombs"
 uuid = "a5314db3-deaa-4849-ba2b-b5443211ced5"
 authors = ["Bryson Cale <bryson.cale1@gmail.com>"]
 version = "0.1.0"
+
+[deps]
+EchelleUtils = "b2f31fbc-a630-4524-89d9-e405e99f1d53"
+FastClosures = "9aa1b823-49e4-5ca5-8b0f-3971ec8bab6a"
+LsqFit = "2fda8390-95c7-5789-9bda-21331edee243"
+NaNStatistics = "b946abbf-3ea7-4610-9019-9858bfdeaf2d"
+Polynomials = "f27b6e38-b328-58d1-80ce-0feddd5e7a45"
