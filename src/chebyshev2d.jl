@@ -11,7 +11,7 @@ function build_λsolution_chebyval2d(pixels, orders, max_pixel, max_order, coeff
             s = 0.0
             for j=1:n
                 for k=1:m
-                    s += coeffs[k, j] * Maths.chebyval(pixels[i] / max_pixel, j-1) * Maths.chebyval(orders[o] / max_order, k-1) / orders[o]
+                    s += coeffs[k, j] * chebyval(pixels[i] / max_pixel, j-1) * chebyval(orders[o] / max_order, k-1) / orders[o]
                 end
             end
             λ[o, i] = s
@@ -63,7 +63,6 @@ function fit_peaks_cheb2d(pixel_centers, orders, λ_centers, weights, max_pixel,
         loss = (coeffs) -> begin
             _model = build_λsolution_chebyval2d_flat(chebs_pixels, chebs_orders, reshape(coeffs, (deg_inter_order+1, deg_intra_order+1)), orders)
             wres = weights_running .* (λ_centers_running .- _model)
-            #@show nansum(wres.^2) / nansum(weights_running)
             return wres
         end
 
@@ -96,15 +95,9 @@ function get_chebyvals(pixels::AbstractVector{<:Real}, orders::AbstractVector{<:
     chebs_pixels = Vector{Float64}[]
     chebs_orders = Vector{Float64}[]
     @assert length(pixels) == length(orders)
-    for i=1:length(pixels)
-        push!(chebs_pixels, Maths.get_chebyvals(pixels[i] / max_pixel, deg_intra_order))
-        push!(chebs_orders, Maths.get_chebyvals(orders[i] / max_order, deg_inter_order))
+    for i in eachindex(pixels)
+        push!(chebs_pixels, Maths.chebyvals(pixels[i] / max_pixel, deg_intra_order))
+        push!(chebs_orders, Maths.chebyvals(orders[i] / max_order, deg_inter_order))
     end
     return chebs_pixels, chebs_orders
-end
-
-function chebyval(x::Real, n::Int)
-    coeffs = zeros(n+1)
-    coeffs[n+1] = 1.0
-    return ChebyshevT(coeffs).(x)
 end
