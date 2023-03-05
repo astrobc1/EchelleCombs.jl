@@ -34,4 +34,7 @@ include("lfc.jl")
 include("drifts.jl")
 
 
+include("chebyshev2d.jl")
+
+
 end
