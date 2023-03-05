@@ -2,7 +2,7 @@
 
 julia_version = "1.9.0-beta4"
 manifest_format = "2.0"
-project_hash = "7cb6e11ee2dbfd264f69bf044805e1348e58d546"
+project_hash = "fff388232ad487cedbe4061033b1b9fcaacdb623"
 
 [[deps.Adapt]]
 deps = ["LinearAlgebra", "Requires"]
@@ -225,7 +225,7 @@ version = "0.6.8"
 
 [[deps.EchelleUtils]]
 deps = ["AstroLib", "DataInterpolations", "Infiltrator", "LinearAlgebra", "LoopVectorization", "NaNStatistics", "Polynomials", "SkyCoords", "StatsBase"]
-git-tree-sha1 = "f14b9d2e9c78f45b5635cc2178f94bf9cc8a3ff2"
+git-tree-sha1 = "45f90e18be2decf1b451e806a714f99971ca101e"
 repo-rev = "master"
 repo-url = "https://github.com/astrobc1/EchelleUtils.jl"
 uuid = "b2f31fbc-a630-4524-89d9-e405e99f1d53"
