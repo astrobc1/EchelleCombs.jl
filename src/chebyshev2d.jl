@@ -1,5 +1,7 @@
 using PyCall
 
+export fit_peaks_cheb2d, get_chebyvals, build_λsolution_chebyval2d, build_λsolution_chebyval2d_flat
+
 ## 2d CC polynomial
 function build_λsolution_chebyval2d(pixels, orders, max_pixel, max_order, coeffs)
     nx = length(pixels)
@@ -72,7 +74,7 @@ function fit_peaks_cheb2d(pixel_centers, orders, λ_centers, weights, max_pixel,
 
         # Flag
         model_best = build_λsolution_chebyval2d_flat(chebs_pixels, chebs_orders, reshape(coeffs_best, (deg_inter_order+1, deg_intra_order+1)), orders)
-        residuals = δλ2δv.(λ_centers .- model_best, λ_centers)
+        residuals = Maths.δλ2δv.(λ_centers .- model_best, λ_centers)
         σuse = findall(isfinite.(residuals) .&& (abs.(residuals) .> 0))
         bad = findall(abs.(residuals) .> min(3 * Maths.robust_stddev(residuals[σuse]), max_vel_cut))
         if length(bad) == 0

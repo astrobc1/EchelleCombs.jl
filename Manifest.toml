@@ -2,7 +2,7 @@
 
 julia_version = "1.9.0-beta4"
 manifest_format = "2.0"
-project_hash = "fff388232ad487cedbe4061033b1b9fcaacdb623"
+project_hash = "245d4a5c05f1da66743cbe4bb04636cd86f4ec67"
 
 [[deps.Adapt]]
 deps = ["LinearAlgebra", "Requires"]
@@ -68,6 +68,18 @@ deps = ["Static"]
 git-tree-sha1 = "0c5f81f47bbbcf4aea7b2959135713459170798b"
 uuid = "62783981-4cbd-42fc-bca8-16325de8dc4b"
 version = "0.1.5"
+
+[[deps.CFITSIO]]
+deps = ["CFITSIO_jll"]
+git-tree-sha1 = "8425c47db102577eefb93cb37b4480e750116b0d"
+uuid = "3b1b4be9-1499-4b22-8d78-7db3344d1961"
+version = "1.4.1"
+
+[[deps.CFITSIO_jll]]
+deps = ["Artifacts", "JLLWrappers", "LibCURL_jll", "Libdl", "Pkg", "Zlib_jll"]
+git-tree-sha1 = "9c91a9358de42043c3101e3a29e60883345b0b39"
+uuid = "b3e40c51-02ae-5482-8a39-3ace5868dcf4"
+version = "4.0.0+0"
 
 [[deps.CPUSummary]]
 deps = ["CpuId", "IfElse", "Static"]
@@ -135,6 +147,14 @@ deps = ["Markdown"]
 git-tree-sha1 = "fcbb72b032692610bfbdb15018ac16a36cf2e406"
 uuid = "adafc99b-e345-5852-983c-f28acb93d879"
 version = "0.3.1"
+
+[[deps.CurveFitParameters]]
+deps = ["DataStructures"]
+git-tree-sha1 = "ad8d02ec43ff5675042d714c93d2351b15f759bf"
+repo-rev = "master"
+repo-url = "https://github.com/astrobc1/CurveFitParameters.jl"
+uuid = "75b670ed-29d0-4b9b-bcd2-edac41b9c208"
+version = "0.1.0"
 
 [[deps.DataAPI]]
 git-tree-sha1 = "e8119c1a33d267e16108be441a287a6981ba1630"
@@ -223,6 +243,14 @@ git-tree-sha1 = "5837a837389fccf076445fce071c8ddaea35a566"
 uuid = "fa6b7ba4-c1ee-5f82-b5fc-ecf0adba8f74"
 version = "0.6.8"
 
+[[deps.EchelleSpectra]]
+deps = ["FITSIO", "PyCall"]
+git-tree-sha1 = "4248425e3c5c759df704dffa881eaea071411a46"
+repo-rev = "master"
+repo-url = "https://github.com/astrobc1/EchelleSpectra.jl"
+uuid = "e42e2a4f-7e48-49c4-9e9a-180127d117fc"
+version = "0.1.0"
+
 [[deps.EchelleUtils]]
 deps = ["AstroLib", "DataInterpolations", "Infiltrator", "LinearAlgebra", "LoopVectorization", "NaNStatistics", "Polynomials", "SkyCoords", "StatsBase"]
 git-tree-sha1 = "45f90e18be2decf1b451e806a714f99971ca101e"
@@ -230,6 +258,12 @@ repo-rev = "master"
 repo-url = "https://github.com/astrobc1/EchelleUtils.jl"
 uuid = "b2f31fbc-a630-4524-89d9-e405e99f1d53"
 version = "0.1.0"
+
+[[deps.FITSIO]]
+deps = ["CFITSIO", "Printf", "Reexport", "Tables"]
+git-tree-sha1 = "3b342f0c3bb37371e1e2ad37672a9c960f9abcb6"
+uuid = "525bcba6-941b-5504-bd06-fd0dc1a4d2eb"
+version = "0.17.0"
 
 [[deps.FastClosures]]
 git-tree-sha1 = "acebe244d53ee1b461970f8910c235b259e772ef"
