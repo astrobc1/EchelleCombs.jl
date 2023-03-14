@@ -1,3 +1,5 @@
+export get_modes
+
 function get_modes(spec, min_mode_spacing; σ_bounds=[0.2, 4.0], xrange=nothing, background_poly_deg=0)
 
     # Number of points
@@ -33,9 +35,13 @@ function get_modes(spec, min_mode_spacing; σ_bounds=[0.2, 4.0], xrange=nothing,
 
     # Fit results
     amplitudes = fill(NaN, n_modes)
+    amplitudes_err = fill(NaN, n_modes)
     modes_pixels_out = fill(NaN, n_modes)
+    modes_pixels_err_out = fill(NaN, n_modes)
     σs = fill(NaN, n_modes)
+    σs_err = fill(NaN, n_modes)
     background_polys = Vector{Polynomial}(undef, n_modes)
+    background_polys_err = Vector{Vector{Float64}}(undef, n_modes)
     rms = fill(NaN, n_modes)
 
     # Gaussian + Background model
@@ -51,16 +57,21 @@ function get_modes(spec, min_mode_spacing; σ_bounds=[0.2, 4.0], xrange=nothing,
 
         # Store results
         pbest = result.param
+        pbest_err = LsqFit.standard_errors(result)
         amplitudes[i] = pbest[1]
+        amplitudes_err[i] = pbest_err[1]
         modes_pixels_out[i] = pbest[2]
+        modes_pixels_err_out[i] = pbest_err[2]
         σs[i] = pbest[3]
+        σs_err[i] = pbest_err[2]
         background_polys[i] = Polynomial(pbest[4:end])
+        background_polys_err[i] = pbest_err[4:end]
         rms[i] = sqrt(nansum(result.resid.^2) / length(result.resid))
 
     end
 
     # Return
-    return modes_pixels_out, amplitudes, σs, background_polys, rms
+    return modes_pixels_out, modes_pixels_err_out, amplitudes, amplitudes_err, σs, σs_err, background_polys, background_polys_err, rms
 end
 
 function estimate_background(spec, min_mode_spacing; smooth_width=nothing)

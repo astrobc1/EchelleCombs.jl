@@ -1,3 +1,4 @@
+export compute_drifts_ccf, cross_correlate_modes, compute_drifts_like_modes
 
 function compute_drifts_ccf(spec0, spec; xrange=nothing, n_modes_ccf=5, min_mode_spacing, ccf_model=:gauss)
 
@@ -100,34 +101,22 @@ function cross_correlate_modes(spec1, spec2, xrange, lags)
     n_lags = length(lags)
     ccf = fill(NaN, n_lags)
     vec_cross = fill(NaN, nx)
-    weights1 = zeros(nx)
-    weights2 = zeros(nx)
-    weights = zeros(nx)
+    weights = ones(nx)
     for i=1:n_lags
+        weights .= 1
         vec_cross .= y1 .* shift1d(y2, lags[i])
-        weights1 .= NaN
-        weights2 .= NaN
-        weights .= NaN
-        weights1[1:end-1] .= abs.(diff(y1))
-        weights2[2:end] .= abs.(diff(y1))
-        weights .= nanmean([weights1 weights2], dim=2)
         good = findall(isfinite.(vec_cross) .&& weights .> 0 .&& isfinite.(weights))
         ccf[i] = @views nansum(weights[good] .* vec_cross[good]) / sum(weights[good])
     end
     return ccf
 end
 
-function compute_drifts_poly(modes_pixels0, modes_λ0, modes_pixels, modes_λ; deg=6)
-    pfit0 = Polynomials.fit(modes_pixels0, modes_λ0, deg)
-    drifts = pfit0.(modes_pixels) .- modes_pixels
-    return drifts
-end
 
-function compute_drifts_like_modes(modes_pixels0, modes_pixels)
+function compute_drifts_like_modes(modes_pixels0, modes_pixels; thresh=1)
     pixels = Float64[]
     drifts = Float64[]
     for i in eachindex(modes_pixels)
-        d = abs.(modes_pixels[i] .- modes_pixels)
+        d = abs.(modes_pixels[i] .- modes_pixels0)
         k = Maths.nanargminimum(d)
         if d[k] < thresh
             push!(pixels, modes_pixels0[k])
@@ -135,4 +124,20 @@ function compute_drifts_like_modes(modes_pixels0, modes_pixels)
         end
     end
     return pixels, drifts
+end
+
+function compute_drifts_like_modes(modes_pixels0, modes_pixels_err0, modes_pixels, modes_pixels_err; thresh=1)
+    pixels = Float64[]
+    drifts = Float64[]
+    drifts_err = Float64[]
+    for i in eachindex(modes_pixels)
+        d = abs.(modes_pixels[i] .- modes_pixels0)
+        k = Maths.nanargminimum(abs.(d))
+        if abs(d[k]) < thresh
+            push!(pixels, (modes_pixels[i] + modes_pixels0[k]) / 2)
+            push!(drifts, d[k])
+            push!(drifts_err, sqrt(modes_pixels_err[i]^2 + modes_pixels_err0[k]^2))
+        end
+    end
+    return pixels, drifts, drifts_err
 end
